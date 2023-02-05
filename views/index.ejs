@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+ 
+
+</head>
+<body>
+    <h1>Expense Tracker</h1>
+<div class="containerr " >
+  <div class="header">
+    <img
+      src="https://i.ibb.co/jfScDTC/budget.png"
+      alt="Expense Tracker"
+    />
+    <!-- <div class="balance-container">
+      <h2>Your Balance</h2>
+      <h2 id="balance" class="balance">$0.00</h2>
+    </div> -->
+  </div>
+  <div class="inc-exp-container">
+    <div>
+      <h4>Income</h4>
+      <p id="money-plus" class="money plus">+ <%= counts[0].incomes%></p>
+    </div>
+    <div>
+      <h4>Expenses</h4>
+      <p id="money-minus" class="money minus">- <%= counts[0].expenses%></p>
+    </div>
+  </div>
+  <h3>History  <button onclick="showModal()"  class="showModal" style="float: right; padding:10px; background-color:cadetblue; border: none;">+</button></h3>
+  <ul id="list" class="list">
+    <% transactions.forEach(transaction=>{%>
+
+   <% if(transaction.type === "1"){%>
+    <li  onclick="Edit('<%= transaction._id%>', '<%= transaction.title%>', '<%= transaction.amount%>', '<%= transaction.type%>')" class="plus">
+        <%= transaction.title%> <span>+<%= transaction.amount%></span>
+    </li>
+  <% }else{%>
+    <li onclick="Edit('<%= transaction._id%>', '<%= transaction.title%>', '<%= transaction.amount%>', '<%= transaction.type%>')" class="minus">
+        <%= transaction.title%> <span>-<%= transaction.amount%></span>
+    </li>
+   <%}%>
+  
+<%})%>
+</ul>
+
+
+
+
+
+
+
+  <div class="modal fade" id="addOrEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add or Edit Transaction</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="add_transaction" method="post" action="/add_new_transaction">
+            <input type="hidden" id="id" name="id" >
+            <input type="hidden" name="op" id="op" value="I">
+            <label for="title">Titile</label>
+            <input type="text" name="title" id="title" placeholder="Title" class="form-control" required>
+            <label for="amount">Amount</label>
+            <input type="text" name="amount" id="amount" placeholder="Amount" class="form-control" required>
+            <label for="type">Transaction type</label>
+            <select name="type" id="type" class="form-control" required>
+                <option value="">select type</option>
+                <option value="1">Income</option>
+                <option value="2">Expense</option>
+            </select>
+
+            <button class="btn btn-success btn-block" type="submit">Save</button>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/js/jquery.min.js"></script>
+ 
+  
+<script src="/assets/js/main.js"></script>
+</body>
+</html>
