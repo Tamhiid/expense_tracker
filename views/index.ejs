@@ -28,11 +28,11 @@
   <div class="inc-exp-container">
     <div>
       <h4>Income</h4>
-      <p id="money-plus" class="money plus">+ <%= counts[0].incomes%></p>
+      <p id="money-plus" class="money plus">+ <%= income_count.length > 0 ? income_count[0].income : 0%></p>
     </div>
     <div>
       <h4>Expenses</h4>
-      <p id="money-minus" class="money minus">- <%= counts[0].expenses%></p>
+      <p id="money-minus" class="money minus">- <%= expense_count.length > 0 ? expense_count[0].expense : 0 %> </p>
     </div>
   </div>
   <h3>History  <button onclick="showModal()"  class="showModal" style="float: right; padding:10px; background-color:cadetblue; border: none;">+</button></h3>

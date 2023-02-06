@@ -30,39 +30,43 @@ app.use(express.static('./public'))
 
 app.get('/', async (req,res)=>{
     let transactions = await Transactions.find({}).sort({createdAt:-1}).limit(5)
-    let counts = await Transactions.aggregate([
+    
+
+    let income_count = await Transactions.aggregate([
+        {
+            $match:{
+                type: "1"
+            }
+        },
         {
             $group:{
                 _id:null,
-                expenses: {
-                    $sum:{
-                        $cond:[
-                            {
-                                $eq:["$type", "2"]
-                            },
-                            1,
-                            0
-                        ]
-                    }
-                },
-                incomes:{
-                    $sum:{
-                        $cond:[
-                            {$eq:["$type","1"]},
-                            1,
-                            0
-                        ]
-                    }
-                }
+                income: {$sum: '$amount'}
             }
         }
     ])
-    // let income_count = await Transactions.find({amount:"1"}).count()
 
-    
+    let expense_count = await Transactions.aggregate([
+        {
+            $match:{
+                type: '2'
+            }
+        },
+
+        {
+            $group:{
+                _id: null,
+                expense: {$sum: '$amount'}
+            }
+        }
+    ])
+
+    console.log('income_count', income_count)
+    console.log('expense_count', expense_count)
     res.render('index',{
         transactions,
-        counts,
+        income_count,
+        expense_count
         
     })
 })
